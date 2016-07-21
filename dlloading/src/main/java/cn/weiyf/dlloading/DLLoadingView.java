@@ -1,17 +1,22 @@
 package cn.weiyf.dlloading;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.Random;
+
 import fr.tvbarthel.lib.blurdialogfragment.SupportBlurDialogFragment;
 
 /**
@@ -31,6 +36,10 @@ public class DLLoadingView extends SupportBlurDialogFragment {
     private ImageView mLoading;
     private RelativeLayout mBackGround;
 
+
+    private DLLoadingViewConfig mConfig;
+
+
     private int[] mIds = {
             R.drawable.num1, R.drawable.num2,
             R.drawable.num3, R.drawable.num4,
@@ -43,6 +52,11 @@ public class DLLoadingView extends SupportBlurDialogFragment {
             R.drawable.num17, R.drawable.num18,
             R.drawable.num19, R.drawable.num20,
     };
+
+
+    public void init(DLLoadingViewConfig config) {
+        this.mConfig = config == null ? new DLLoadingViewConfig() : config;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -69,28 +83,14 @@ public class DLLoadingView extends SupportBlurDialogFragment {
         }
         Glide.with(getActivity()).load(mId).asGif().diskCacheStrategy(DiskCacheStrategy.NONE).into(mLoading);
         setBackGroundColor(BitmapUtil.getPixColor(BitmapFactory.decodeResource(getResources(), mId)));
-        mGradientDrawable.setColor(backGroundColor);
-        mBackGround.setBackground(mGradientDrawable);
     }
 
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-        mDialog = null;
-    }
 
     public void setImageResource(int id) {
         this.mId = id;
         setResource();
     }
 
-    public void setBlurredActionBar(boolean mBlurredActionBar) {
-        this.mBlurredActionBar = mBlurredActionBar;
-    }
-
-    public void setCornerRadius(int cornerRadius) {
-        CornerRadius = cornerRadius;
-    }
 
     public void setBackGroundColor(int backGroundColor) {
         this.backGroundColor = backGroundColor;
@@ -98,41 +98,73 @@ public class DLLoadingView extends SupportBlurDialogFragment {
         mBackGround.setBackground(mGradientDrawable);
     }
 
-    public void setRadius(int mRadius) {
-        this.mRadius = mRadius;
-    }
-
-    public void setDownScaleFactor(float mDownScaleFactor) {
-        this.mDownScaleFactor = mDownScaleFactor;
-    }
-
-    public void setDimming(boolean mDimming) {
-        this.mDimming = mDimming;
+    public DLLoadingView() {
+        super();
     }
 
     @Override
-    protected boolean isDimmingEnable() {
-        return mDimming;
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
     }
 
     @Override
-    protected boolean isActionBarBlurred() {
-        return mBlurredActionBar;
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+
+    @Override
+    protected boolean isDebugEnable() {
+        return super.isDebugEnable();
     }
 
     @Override
     protected float getDownScaleFactor() {
-        return mDownScaleFactor;
+        return super.getDownScaleFactor();
     }
 
     @Override
     protected int getBlurRadius() {
-        return mRadius;
+        return super.getBlurRadius();
     }
 
     @Override
-    protected boolean isDebugEnable() {
-        return true;
+    protected boolean isDimmingEnable() {
+        return super.isDimmingEnable();
     }
 
+    @Override
+    protected boolean isActionBarBlurred() {
+        return super.isActionBarBlurred();
+    }
+
+    @Override
+    protected boolean isRenderScriptEnable() {
+        return super.isRenderScriptEnable();
+    }
 }
